@@ -11,6 +11,7 @@ def crop_image(img, box, savepath): # crop object image and save
     y1, y2 = solve_equation(2 * box[1] * h, box[3] * h)
 
     crop = img[y1:y2,x1:x2]
+    print(savepath)
     cv2.imwrite(savepath, crop) # write image crop to data
 
 def read_labels(filename): # read object detected
@@ -27,9 +28,13 @@ def loop_all_files(directory):
             path.append(os.path.join(directory, file).replace('\\', '/'))
     return path
 
+def create_folder_result(directory): # create folder to contain output data
+    if not os.path.exists(directory):
+        os.makedirs(directory)
 
 def main():
     image_path = 'exp6'
+    create_folder_result(image_path + '/result')
     images = loop_all_files(image_path) # get all images
 
     for image in images:
