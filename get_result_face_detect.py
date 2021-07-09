@@ -20,17 +20,17 @@ def read_labels(filename): # read object detected
     return content
     
 
-def loop_all_files(directory, type):
+def loop_all_files(directory):
     path = []
     for file in os.listdir(directory):
-        if file.endswith(type):
+        if file.endswith(('jpg', 'png', 'jpeg')):
             path.append(os.path.join(directory, file).replace('\\', '/'))
     return path
 
 
 def main():
     image_path = 'exp6'
-    images = loop_all_files(image_path, 'jpg') # get all images
+    images = loop_all_files(image_path) # get all images
 
     for image in images:
         img = cv2.imread(image) # read image
@@ -39,7 +39,8 @@ def main():
         labels = read_labels(image_path + '/labels' + image[image.rindex('/'):-3] + 'txt') # read labels file
 
         for label in labels: # read line by line of label
-            savepath = image_path + '/result' + image[image.rindex('/'):-4] + str(index) + '.jpg'
+            file_type = image[image.rindex('.'):]
+            savepath = image_path + '/result' + image[image.rindex('/'):-4] + str(index) + file_type
 
             box = list(map(float, label.split(' ')[1:]))
             crop_image(img, box, savepath)
