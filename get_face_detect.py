@@ -2,7 +2,7 @@ from utils.file import *
 from utils.image import crop_image
 import cv2
 
-image_path = 'exp6'
+image_path = 'data'
 create_folder_result(image_path + '/result')
 images = loop_all_files(image_path) # get all images
 
@@ -17,6 +17,7 @@ for image in images:
         savepath = image_path + '/result' + image[image.rindex('/'):-4] + str(index) + file_type
 
         box = list(map(float, label.split(' ')[1:]))
-        crop_image(img, box, savepath)
+        result = crop_image(img, box, 5)
 
+        cv2.imwrite(savepath, result)
         index += 1
