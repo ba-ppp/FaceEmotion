@@ -1,0 +1,7 @@
+version: '3'
+
+services: 
+    face-service:
+        build: ./faceDetect
+        volumes:
+            - ./faceDetect/runs:/code/runs
